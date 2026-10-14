@@ -1,0 +1,48 @@
+<view class="scene-hero">
+  <view class="scene-hero-label">你 1 分钟赚</view>
+  <view class="scene-hero-num">¥{{perMin}}</view>
+</view>
+
+<view class="scene-slogan">{{slogan}}</view>
+
+<view class="section-title">🛒 买东西前，先算算要白干多久</view>
+
+<view class="goods-list">
+  <view class="goods-card" wx:for="{{goods}}" wx:key="name">
+    <view class="goods-icon">{{item.icon}}</view>
+    <view class="goods-info">
+      <view class="goods-name">{{item.name}}</view>
+      <view class="goods-price">¥{{item.price}}</view>
+    </view>
+    <view class="goods-work">= 白干 {{item.work}}</view>
+    <view class="goods-del" bindtap="removeGoods" data-name="{{item.name}}">✕</view>
+  </view>
+</view>
+
+<view class="add-btn" bindtap="toggleAdd">{{adding ? '收起' : '➕ 添加自定义商品'}}</view>
+
+<view class="add-form" wx:if="{{adding}}">
+  <input class="add-input" placeholder="商品名，如 一件羽绒服" value="{{newName}}" bindinput="onNameInput" />
+  <input class="add-input" type="number" placeholder="价格（元），如 800" value="{{newPrice}}" bindinput="onPriceInput" />
+  <view class="add-submit" bindtap="addGoods">添加</view>
+</view>
+
+<view class="section-title">⏱️ 你的时间都值多少钱</view>
+
+<view class="scene-list">
+  <view class="scene-card" wx:for="{{computed}}" wx:key="id">
+    <view class="scene-icon">{{item.icon}}</view>
+    <view class="scene-info">
+      <view class="scene-name">{{item.name}}</view>
+      <view class="scene-tip">{{item.tip}}</view>
+      <view class="scene-min">约 {{item.minutes}} 分钟</view>
+    </view>
+    <view class="scene-amount">¥{{item.amount}}</view>
+  </view>
+</view>
+
+<view class="section-title">🔭 格局打开</view>
+<view class="life-card">
+  <view class="life-label">从 22 岁干到 62 岁，一辈子当牛做马 40 年</view>
+  <view class="life-num">也就赚 ¥{{lifeEarn}} 万</view>
+</view>

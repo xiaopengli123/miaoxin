@@ -1,0 +1,7 @@
+<view class="poster-wrap">
+  <canvas wx:if="{{!posterImg}}" canvas-id="poster" class="poster-canvas"></canvas>
+  <image wx:else class="poster-canvas" src="{{posterImg}}" mode="widthFix"></image>
+
+  <view class="poster-tip">保存到相册，发到群里，比比谁的秒薪高</view>
+  <view class="save-btn" bindtap="save">保存到相册</view>
+</view>

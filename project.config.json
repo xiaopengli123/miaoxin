@@ -1,0 +1,11 @@
+{
+  "appid": "wx49243641dc10a6f0",
+  "compileType": "miniprogram",
+  "libVersion": "3.0.0",
+  "setting": {
+    "es6": true,
+    "postcss": true,
+    "minified": true
+  },
+  "projectname": "miaoxin"
+}

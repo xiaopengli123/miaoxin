@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="秒薪">
+<meta name="theme-color" content="#0A0A0E">
+<title>秒薪</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  :root {
+    --bg: #0A0A0E; --card: #1A1A1F; --card2: #0F0F12;
+    --gold: #FFD666; --gold2: #FFE9A8; --gold3: #E0C060; --gold4: #C0A050;
+    --gray: #8A8A8F; --gray2: #5A5A5F; --line: #2A2A30; --text: #F5F5F7;
+  }
+  html, body { background: var(--bg); color: var(--text); font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif; }
+  body { max-width: 480px; margin: 0 auto; padding-bottom: 76px; min-height: 100vh; }
+  .hidden { display: none !important; }
+
+  /* 顶部 */
+  .topbar { position: sticky; top: 0; z-index: 10; background: rgba(10,10,14,.92); backdrop-filter: blur(10px); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+  .brand { font-size: 18px; font-weight: 800; color: var(--gold); letter-spacing: 2px; }
+  .brand-sub { font-size: 12px; color: var(--gray); }
+
+  /* 秒薪英雄区 */
+  .hero { padding: 28px 20px 8px; text-align: center; }
+  .hero-sec { display: flex; align-items: baseline; justify-content: center; }
+  .hero-num { font-size: 64px; font-weight: 900; color: var(--gold); text-shadow: 0 0 30px rgba(255,214,102,.9); font-variant-numeric: tabular-nums; }
+  .hero-unit { font-size: 22px; color: var(--gold4); margin-left: 8px; }
+  .hero-sub { color: var(--gray); font-size: 15px; margin-top: 14px; }
+
+  .countdown { margin: 20px 16px; background: linear-gradient(135deg,#2A1F00,#1A1400); border: 1px solid var(--gold); border-radius: 18px; padding: 26px; text-align: center; box-shadow: 0 0 30px rgba(255,214,102,.15); }
+  .cd-label { color: var(--gold); font-size: 14px; letter-spacing: 3px; }
+  .cd-time { font-size: 42px; font-weight: 800; color: var(--gold2); margin-top: 6px; font-variant-numeric: tabular-nums; }
+  .cd-money { color: var(--gold3); font-size: 15px; margin-top: 8px; }
+
+  .card { margin: 14px 16px; background: var(--card); border-radius: 16px; padding: 20px; }
+  .progress-head { display: flex; justify-content: space-between; font-size: 15px; }
+  .progress-value { color: var(--gold); font-weight: 700; }
+  .progress-bar { height: 14px; background: var(--line); border-radius: 7px; margin-top: 14px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg,var(--gold),#FFB800); border-radius: 7px; transition: width .5s; }
+  .progress-tip { color: var(--gray); font-size: 13px; margin-top: 10px; text-align: center; }
+
+  .grid { display: flex; flex-wrap: wrap; }
+  .grid-item { width: 25%; text-align: center; padding: 14px 0; }
+  .grid-num { font-size: 22px; font-weight: 800; color: var(--gold2); font-variant-numeric: tabular-nums; }
+  .grid-label { font-size: 12px; color: var(--gray); margin-top: 4px; }
+
+  /* 扎心语录轮播 */
+  .slogan-box { margin: 4px 16px 16px; text-align: center; color: var(--gold4); font-size: 14px; line-height: 1.6; min-height: 44px; }
+
+  .btn { display: block; margin: 12px 16px; background: linear-gradient(135deg,#3A2A12,#2A1F00); border: 1px dashed var(--gold); color: var(--gold); border-radius: 14px; text-align: center; padding: 16px; font-size: 15px; font-weight: 700; }
+  .btn:active { opacity: .8; }
+
+  /* 摸鱼 */
+  .risk-panel { margin: 16px; background: var(--card); border-radius: 16px; padding: 22px; text-align: center; border: 1px solid var(--line); }
+  .risk-panel.safe { border-color: #3A5A3A; } .risk-panel.warn { border-color: #7A6A2A; } .risk-panel.danger { border-color: #7A4A2A; } .risk-panel.high { border-color: #7A2A2A; } .risk-panel.caught { border-color: #FF3B30; }
+  .fish-title { font-size: 22px; font-weight: 800; color: var(--gold2); }
+  .fish-time { font-size: 40px; font-weight: 900; color: var(--gold); margin: 8px 0; font-variant-numeric: tabular-nums; }
+  .fish-lost { color: var(--gray); font-size: 14px; }
+  .risk-status { margin-top: 16px; }
+  .risk-label { font-size: 18px; font-weight: 700; color: var(--gold3); }
+  .risk-desc { color: var(--gray); font-size: 13px; margin-top: 4px; }
+  .risk-quote { margin-top: 14px; color: var(--gold4); font-size: 14px; font-style: italic; }
+  .risk-hotzone { margin-top: 10px; color: #FF6B5A; font-size: 13px; }
+  .fish-actions { display: flex; gap: 12px; margin: 16px; }
+  .fish-btn { flex: 1; border-radius: 14px; padding: 16px; text-align: center; font-weight: 700; font-size: 16px; }
+  .fish-btn.start { background: var(--gold); color: #1A1400; }
+  .fish-btn.stop { background: var(--card); color: var(--gold); border: 1px solid var(--gold); }
+  .fish-btn.disabled { opacity: .4; pointer-events: none; }
+  .work-bar { margin: 0 16px; background: var(--card); border-radius: 14px; padding: 16px; display: flex; }
+  .work-item { flex: 1; text-align: center; }
+  .work-label { color: var(--gray); font-size: 12px; }
+  .work-time { color: var(--gold2); font-size: 20px; font-weight: 700; margin-top: 6px; font-variant-numeric: tabular-nums; }
+  .work-divider { width: 1px; background: var(--line); }
+
+  .quick { margin: 16px; background: var(--card); border-radius: 14px; padding: 16px; }
+  .quick-label { color: var(--gray); font-size: 13px; }
+  .quick-btns { display: flex; gap: 10px; margin-top: 12px; }
+  .quick-btn { flex: 1; background: var(--card2); border-radius: 10px; padding: 12px; text-align: center; color: var(--gold3); font-size: 14px; }
+  .quick-btn:active { background: var(--line); }
+
+  .tip-list { margin: 16px; background: var(--card); border-radius: 14px; padding: 18px; }
+  .tip-item { color: var(--gray); font-size: 14px; line-height: 1.9; }
+  .card-title { font-size: 16px; font-weight: 700; color: var(--gold2); margin-bottom: 12px; }
+
+  /* 计算 */
+  .field-label { font-size: 13px; color: var(--gray); margin: 14px 0 8px; }
+  .field-input { width: 100%; background: var(--card2); border-radius: 10px; padding: 14px 16px; font-size: 18px; color: var(--text); font-weight: 600; border: none; outline: none; }
+  .radio-group { display: flex; flex-direction: column; }
+  .radio { margin: 8px 0; font-size: 15px; color: var(--text); display: flex; align-items: center; }
+  .radio input { margin-right: 8px; accent-color: var(--gold); }
+  .result { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); text-align: center; }
+  .result-label { color: var(--gray); font-size: 13px; }
+  .result-num { color: var(--gold); font-size: 40px; font-weight: 800; margin-top: 6px; font-variant-numeric: tabular-nums; }
+  .result-tip { color: var(--gray2); font-size: 12px; margin-top: 8px; }
+  .tax-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; color: #C0C0C5; }
+  .tax-row:last-child { border-bottom: none; }
+  .tax-row strong { color: var(--gold); }
+  .holiday-card { margin: 16px; background: linear-gradient(135deg,#2A1F00,#1A1400); border: 1px solid var(--gold); border-radius: 16px; padding: 22px; display: flex; align-items: center; }
+  .holiday-item { flex: 1; text-align: center; }
+  .holiday-divider { width: 1px; height: 50px; background: #4A3E16; }
+  .holiday-label { color: var(--gold3); font-size: 13px; }
+  .holiday-num { color: var(--gold2); font-size: 36px; font-weight: 800; margin-top: 6px; font-variant-numeric: tabular-nums; }
+
+  /* 设置 */
+  .set-save { display: block; margin: 20px 16px; background: var(--gold); color: #1A1400; border-radius: 14px; padding: 16px; text-align: center; font-weight: 800; font-size: 16px; }
+  .set-tip { margin: 0 16px 20px; color: var(--gray2); font-size: 12px; line-height: 1.6; }
+
+  /* 底部导航 */
+  .tabbar { position: fixed; bottom: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto; background: rgba(26,26,31,.96); backdrop-filter: blur(10px); border-top: 1px solid var(--line); display: flex; padding-bottom: env(safe-area-inset-bottom); }
+  .tab { flex: 1; text-align: center; padding: 10px 0 8px; color: var(--gray); font-size: 12px; }
+  .tab .ico { display: block; font-size: 22px; margin-bottom: 2px; }
+  .tab.active { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="brand">秒薪</div>
+    <div class="brand-sub">算算你的一秒值多少钱</div>
+  </div>
+</div>
+
+<!-- 秒薪 tab -->
+<section id="tab-sec" class="tab-page">
+  <div class="hero">
+    <div class="hero-sec"><span class="hero-num">¥<span id="perSecStr">0.0000</span></span><span class="hero-unit">/ 秒</span></div>
+    <div class="hero-sub">你的每一秒，都在为你赚钱 💸</div>
+  </div>
+  <div class="countdown">
+    <div class="cd-label" id="cdLabel">⏰ 距下班还有</div>
+    <div class="cd-time" id="remainStr">—</div>
+    <div class="cd-money">今天还能赚 ¥<span id="remainMoney">0.00</span></div>
+  </div>
+  <div class="card">
+    <div class="progress-head"><span>今日已赚</span><span class="progress-value">¥<span id="earnedStr">0.00</span> / ¥<span id="dailyStr">0.00</span></span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="progress-tip" id="statusText">— · 今日进度 0%</div>
+  </div>
+  <div class="card grid">
+    <div class="grid-item"><div class="grid-num" id="perMin">0.00</div><div class="grid-label">1 分钟</div></div>
+    <div class="grid-item"><div class="grid-num" id="hourly">0.00</div><div class="grid-label">1 小时</div></div>
+    <div class="grid-item"><div class="grid-num" id="daily">0.00</div><div class="grid-label">1 天</div></div>
+    <div class="grid-item"><div class="grid-num" id="monthly">0</div><div class="grid-label">1 个月</div></div>
+  </div>
+  <div class="slogan-box" id="slogan"></div>
+  <div class="btn" onclick="copyShare()">📸 复制我的秒薪，发给朋友</div>
+</section>
+
+<!-- 摸鱼 tab -->
+<section id="tab-fish" class="tab-page hidden">
+  <div class="risk-panel" id="riskPanel">
+    <div class="fish-title" id="fishTitle">🐣 摸鱼萌新</div>
+    <div class="fish-time" id="displayTime">0 分钟</div>
+    <div class="fish-lost">已损失 ¥<span id="lostMoney">0.00</span> ≈ <span id="lostGoods">0</span> 杯奶茶</div>
+    <div class="risk-status">
+      <div class="risk-label" id="riskLabel">安全</div>
+      <div class="risk-desc" id="riskDesc">还没开始偷懒</div>
+    </div>
+    <div class="risk-quote" id="quote">点「开始偷懒」，看看你能摸多久不被发现</div>
+    <div class="risk-hotzone" id="hotZone"></div>
+  </div>
+  <div class="fish-actions">
+    <div class="fish-btn start" id="btnStart" onclick="startFish()">开始偷懒 🐟</div>
+    <div class="fish-btn stop" id="btnStop" onclick="stopFish()">不摸了，回去干活</div>
+  </div>
+  <div class="work-bar hidden" id="workBar">
+    <div class="work-item"><div class="work-label">💼 已连续工作</div><div class="work-time" id="workTime">—</div></div>
+    <div class="work-divider"></div>
+    <div class="work-item"><div class="work-label">距下次摸鱼提醒</div><div class="work-time" id="workRemindIn">—</div></div>
+  </div>
+  <div class="quick">
+    <div class="quick-label">手动补记（忘记计时时用）：</div>
+    <div class="quick-btns">
+      <div class="quick-btn" onclick="addMinutes(10)">+10 分</div>
+      <div class="quick-btn" onclick="addMinutes(30)">+30 分</div>
+      <div class="quick-btn" onclick="addMinutes(60)">+1 小时</div>
+    </div>
+  </div>
+  <div class="tip-list">
+    <div class="card-title">⏰ 领导出没高危时段</div>
+    <div class="tip-item">09:00–09:30 晨会·领导巡视<br>11:00–11:30 饭前·领导溜达<br>14:00–14:30 午后·领导巡查<br>16:30–17:30 下班前·领导突击</div>
+  </div>
+  <div class="tip-list">
+    <div class="card-title">🕵️ 摸鱼防抓六招</div>
+    <div class="tip-item">1. 耳朵当雷达：听脚步声辨人<br>2. 瞬间 Alt+Tab 切回工作界面<br>3. 表情管理：别盯着屏幕傻笑<br>4. 装忙：键盘敲响点、眉头皱起来<br>5. 永远开着一个工作文档挡箭牌<br>6. 屏幕调暗 + 防窥膜</div>
+  </div>
+  <div class="btn" onclick="resetFish()" style="border-style:solid; color:var(--gray)">清空今日摸鱼记录</div>
+</section>
+
+<!-- 计算 tab -->
+<section id="tab-calc" class="tab-page hidden">
+  <div class="holiday-card">
+    <div class="holiday-item"><div class="holiday-label">距「<span id="holidayName">元旦</span>」</div><div class="holiday-num"><span id="holidayDays">0</span> 天</div></div>
+    <div class="holiday-divider"></div>
+    <div class="holiday-item"><div class="holiday-label">距下个周末</div><div class="holiday-num"><span id="weekendDays">0</span> 天</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💪 加班费计算器</div>
+    <div style="color:var(--gray);font-size:13px">你的时薪 <b style="color:var(--gold)" id="otHourly">0.00</b> / 小时</div>
+    <div class="field-label">加班时长（小时）</div>
+    <input class="field-input" type="number" inputmode="decimal" id="otHours" value="2" oninput="calcOvertime()">
+    <div class="field-label">加班类型</div>
+    <div class="radio-group">
+      <label class="radio"><input type="radio" name="otRate" value="1.5" checked onchange="calcOvertime()"> 工作日加班 ×1.5</label>
+      <label class="radio"><input type="radio" name="otRate" value="2" onchange="calcOvertime()"> 休息日加班 ×2</label>
+      <label class="radio"><input type="radio" name="otRate" value="3" onchange="calcOvertime()"> 法定节假日 ×3</label>
+    </div>
+    <div class="result">
+      <div class="result-label">加班费</div>
+      <div class="result-num">¥<span id="otMoney">0.00</span></div>
+      <div class="result-tip">相当于平时白干 <span id="otEquiv">3.0</span> 小时</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💰 税后工资计算器</div>
+    <div class="field-label">税前月薪（元）</div>
+    <input class="field-input" type="number" inputmode="decimal" id="pretax" value="8000" oninput="calcTax()">
+    <div class="result-tip" style="margin-top:6px">已按设置的到手月薪 ¥<span id="settingNet">0</span> 反推税前，可手动改</div>
+    <div class="field-label">公积金比例（%，默认 12）</div>
+    <input class="field-input" type="number" inputmode="decimal" id="housingRatio" value="12" oninput="calcTax()">
+    <div style="margin-top:16px">
+      <div class="tax-row"><span>养老保险（8%）</span><span>-¥<span id="txPension">0.00</span></span></div>
+      <div class="tax-row"><span>医疗保险（2%）</span><span>-¥<span id="txMedical">0.00</span></span></div>
+      <div class="tax-row"><span>失业保险（0.5%）</span><span>-¥<span id="txUnemploy">0.00</span></span></div>
+      <div class="tax-row"><span>住房公积金</span><span>-¥<span id="txHousing">0.00</span></span></div>
+      <div class="tax-row"><span>五险一金合计</span><span>-¥<span id="txInsurance">0.00</span></span></div>
+      <div class="tax-row"><span>应纳税所得额</span><span>¥<span id="txTaxable">0.00</span></span></div>
+      <div class="tax-row"><span>个人所得税</span><span>-¥<span id="txTax">0.00</span></span></div>
+    </div>
+    <div class="result">
+      <div class="result-label">每月到手</div>
+      <div class="result-num">¥<span id="txNet">0.00</span></div>
+      <div class="result-tip">估算值，实际以当地政策为准</div>
+    </div>
+  </div>
+</section>
+
+<!-- 设置 tab -->
+<section id="tab-setting" class="tab-page hidden">
+  <div class="card">
+    <div class="field-label">收入周期</div>
+    <div class="radio-group">
+      <label class="radio"><input type="radio" name="type" value="month" onchange="onTypeChange(this.value)"> 月薪</label>
+      <label class="radio"><input type="radio" name="type" value="year" onchange="onTypeChange(this.value)"> 年薪</label>
+    </div>
+    <div class="field-label" id="salaryLabel">月薪（元）</div>
+    <input class="field-input" type="number" inputmode="decimal" id="salary" value="8000">
+    <div class="field-label">每月工作天数</div>
+    <input class="field-input" type="number" inputmode="decimal" id="workDays" value="22">
+    <div class="field-label">每天工作小时</div>
+    <input class="field-input" type="number" inputmode="decimal" id="workHours" value="8">
+    <div class="field-label">几点上班（小时，如 9 或 9.5）</div>
+    <input class="field-input" type="number" inputmode="decimal" id="startHour" value="9">
+    <div class="field-label">几点下班（小时，如 18；夜班可填 4 跨天）</div>
+    <input class="field-input" type="number" inputmode="decimal" id="endHour" value="">
+    <div class="set-save" onclick="saveConfig()">保存并计算</div>
+    <div class="set-tip">这里填「税后到手」月薪，首页的「每秒赚 X」最真实。下班时间留空则按「上班 + 工作时长」推导；夜班跨天请填小于上班时间的值（如 4）。</div>
+  </div>
+</section>
+
+<div class="tabbar">
+  <div class="tab active" data-tab="sec" onclick="switchTab('sec')"><span class="ico">⏱️</span>秒薪</div>
+  <div class="tab" data-tab="fish" onclick="switchTab('fish')"><span class="ico">🐟</span>摸鱼</div>
+  <div class="tab" data-tab="calc" onclick="switchTab('calc')"><span class="ico">🧮</span>计算</div>
+  <div class="tab" data-tab="setting" onclick="switchTab('setting')"><span class="ico">⚙️</span>设置</div>
+</div>
+
+<script>
+// ===== 基础工具 =====
+var DEFAULTS = { salary: 8000, type: 'month', workDays: 22, workHours: 8, startHour: 9 };
+function getConfig() {
+  var saved = JSON.parse(localStorage.getItem('ms_config') || '{}');
+  return Object.assign({}, DEFAULTS, saved);
+}
+function calc(cfg) {
+  var monthly = cfg.type === 'year' ? cfg.salary / 12 : cfg.salary;
+  var hourly = monthly / (cfg.workDays * cfg.workHours);
+  var perMin = hourly / 60, perSec = perMin / 60, daily = monthly / cfg.workDays;
+  return { monthly: monthly, hourly: hourly, perMin: perMin, perSec: perSec, daily: daily };
+}
+function nowHours() {
+  var d = new Date();
+  return d.getHours() + d.getMinutes() / 60 + d.getSeconds() / 3600;
+}
+function getEndHour(cfg) {
+  var start = Number(cfg.startHour || 9);
+  if (cfg.endHour) return Number(cfg.endHour);
+  return start + Number(cfg.workHours || 8);
+}
+function todayStatus(cfg) {
+  var r = calc(cfg);
+  var start = Number(cfg.startHour || 9), end = getEndHour(cfg), now = nowHours();
+  var workLen = (end - start + 24) % 24;
+  var offset = (now - start + 24) % 24;
+  var earned, remainHours, working, over, remainMoney;
+  if (offset < workLen) {
+    earned = offset * r.hourly; remainHours = workLen - offset; remainMoney = remainHours * r.hourly; working = true; over = false;
+  } else if (now < start) {
+    earned = 0; remainHours = start - now; remainMoney = r.daily; working = false; over = false;
+  } else {
+    earned = r.daily; remainHours = 0; remainMoney = 0; working = false; over = true;
+  }
+  var progress = r.daily > 0 ? Math.max(0, Math.min(100, Math.round(earned / r.daily * 100))) : 0;
+  return { earned: earned, remainHours: remainHours, remainMoney: remainMoney, working: working, over: over, progress: progress };
+}
+function fmt(n) { return Number(n).toFixed(2); }
+function fmtTime(sec) {
+  var h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60);
+  return h > 0 ? h + ' 小时 ' + m + ' 分' : m + ' 分钟';
+}
+function fmtRemain(hours) {
+  if (hours <= 0) return '0 分';
+  var h = Math.floor(hours), m = Math.round((hours - h) * 60);
+  return h > 0 ? h + ' 小时 ' + m + ' 分' : m + ' 分钟';
+}
+
+// ===== 扎心语录 =====
+var SLOGANS = ['你摸鱼的每一秒，都是白送给公司的钱','现在偷的懒，就是将来少赚的钱','牛马耕地，耕的是自己的未来','你的每一秒都明码标价，别让它溜走','工资买断你白天，别把命也搭进去','上班是给自己攒底气，不是给老板打工','每一秒都在增值，摸鱼就是亏钱','别人一秒钟赚的，可能顶你一分钟'];
+
+// ===== 摸鱼 =====
+var QUOTES = {
+  safe: ['摸鱼要有度，领导不是摆设','偷懒一时爽，一直偷懒…容易被抓','你现在偷的懒，领导都看在眼里'],
+  warn: ['领导的目光，像探照灯一样扫过来','你摸的鱼，领导都记在小本本上','摸鱼超过 15 分钟，就有点危险了'],
+  danger: ['再不收手，年底绩效见分晓','领导已经起身了，方向：你这边','半个小时的偷懒，够领导起疑心了'],
+  high: ['别看了，快切回工作！','身后有脚步声，还不快装忙？','领导就在十米之内，手机收起来！'],
+  caught: ['🚨 你已经被领导锁定了！','饭碗悬了，赶紧回去干活！','摸鱼一时爽，绩效火葬场']
+};
+var TITLES = [
+  { max: 1800, title: '🐣 摸鱼萌新' }, { max: 3600, title: '🐟 摸鱼学徒' },
+  { max: 7200, title: '🦈 摸鱼老手' }, { max: 10800, title: '🐙 摸鱼大师' },
+  { max: Infinity, title: '👑 摸鱼之王' }
+];
+var HOT_ZONES = [
+  { s: 9, e: 9.5, label: '晨会·领导巡视' }, { s: 11, e: 11.5, label: '饭前·领导溜达' },
+  { s: 14, e: 14.5, label: '午后·领导巡查' }, { s: 16.5, e: 17.5, label: '下班前·领导突击' }
+];
+function riskLevel(min) {
+  if (min < 15) return { level: 'safe', label: '安全', desc: '领导没注意你，放心摸' };
+  if (min < 30) return { level: 'warn', label: '警惕', desc: '领导可能随时经过，留意点' };
+  if (min < 45) return { level: 'danger', label: '危险', desc: '领导开始频繁看过来，注意！' };
+  if (min < 60) return { level: 'high', label: '高危', desc: '领导就在附近，赶紧切回工作！' };
+  return { level: 'caught', label: '被抓边缘', desc: '🚨 已经摸太久了，随时可能被抓！' };
+}
+function restTip(h) {
+  var tips = ['已经工作 ' + h + ' 小时了，起来上个厕所、倒杯水吧 🚻','连续工作 ' + h + ' 小时，伸个懒腰、活动活动筋骨 🤸','工作 ' + h + ' 小时了，去茶水间吹会牛皮、换个脑子 ☕','盯屏 ' + h + ' 小时，眼睛该休息了，望望远处 👀','久坐 ' + h + ' 小时，站起来走走，去窗边喘口气 🚶','干了 ' + h + ' 小时活，该摸 5 分钟鱼回回血了 🐟'];
+  return tips[Math.floor(Math.random() * tips.length)];
+}
+
+// ===== 摸鱼状态 =====
+var fishState = null;
+function todayStr() { var d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
+function freshFish() { return { date: todayStr(), totalSeconds: 0, running: false, startTime: 0, working: false, workStartTime: 0, workTotalSeconds: 0, workRemindedHours: 0 }; }
+function loadFish() {
+  var st = JSON.parse(localStorage.getItem('ms_fish') || 'null');
+  fishState = (st && st.date === todayStr()) ? Object.assign(freshFish(), st) : freshFish();
+}
+function saveFish() { localStorage.setItem('ms_fish', JSON.stringify(fishState)); }
+function workEndTimeMs() {
+  var cfg = getConfig(); var start = Number(cfg.startHour || 9); var end = getEndHour(cfg);
+  var cross = end <= start; var d = new Date(); var nowH = nowHours();
+  if (cross && nowH >= start) d.setDate(d.getDate() + 1);
+  d.setHours(Math.floor(end), Math.round((end - Math.floor(end)) * 60), 0, 0);
+  return d.getTime();
+}
+function elapsedFish() {
+  if (!fishState.running || !fishState.startTime) return 0;
+  var clamp = Math.min(Date.now(), workEndTimeMs());
+  return Math.max(0, Math.floor((clamp - fishState.startTime) / 1000));
+}
+function elapsedWork() {
+  if (!fishState.working || !fishState.workStartTime) return 0;
+  var clamp = Math.min(Date.now(), workEndTimeMs());
+  return Math.max(0, Math.floor((clamp - fishState.workStartTime) / 1000));
+}
+function currentSeconds() { return fishState.totalSeconds + elapsedFish(); }
+function currentWorkSeconds() { return fishState.workTotalSeconds + elapsedWork(); }
+function currentPhase() {
+  var cfg = getConfig(); var start = Number(cfg.startHour || 9); var end = getEndHour(cfg); var nowH = nowHours();
+  var workLen = (end - start + 24) % 24, offset = (nowH - start + 24) % 24;
+  if (offset < workLen) return 'working';
+  if (nowH < start) return 'before';
+  return 'after';
+}
+
+var lastLevel = null, quoteTick = 0;
+function renderFish() {
+  var phase = currentPhase();
+  if (phase !== 'working') {
+    if (fishState.running) { fishState.totalSeconds += elapsedFish(); fishState.running = false; fishState.startTime = 0; saveFish(); }
+    if (fishState.working) { fishState.workTotalSeconds += elapsedWork(); fishState.working = false; fishState.workStartTime = 0; saveFish(); }
+  }
+  var r = calc(getConfig());
+  var sec = currentSeconds(), minutes = sec / 60, lost = sec / 3600 * r.hourly;
+  var rk, fishTitle, quote, hotZone = '', workTime = '', workRemindIn = '';
+
+  if (phase === 'before') {
+    rk = { level: 'safe', label: '未上班', desc: '还没到上班时间，摸鱼机制暂停' }; fishTitle = '⏸️ 未上班'; quote = '还没到点，先去吃个早餐吧';
+  } else if (phase === 'after') {
+    rk = { level: 'safe', label: '已下班', desc: '已下班，摸鱼机制暂停，今天辛苦啦' }; fishTitle = '🏁 已下班'; quote = '下班了快走，别在工位逗留';
+  } else {
+    rk = riskLevel(minutes);
+    fishTitle = TITLES[0].title;
+    for (var i = 0; i < TITLES.length; i++) { if (sec < TITLES[i].max) { fishTitle = TITLES[i].title; break; } }
+    quoteTick++;
+    var quotes = QUOTES[rk.level];
+    var interval = (rk.level === 'high' || rk.level === 'caught') ? 10 : 20;
+    quote = sec > 0 ? quotes[Math.floor(quoteTick / interval) % quotes.length] : '点「开始偷懒」，看看你能摸多久不被发现';
+    var nowH = nowHours();
+    for (var j = 0; j < HOT_ZONES.length; j++) { if (nowH >= HOT_ZONES[j].s && nowH < HOT_ZONES[j].e) { hotZone = '⚠️ 现在正是「' + HOT_ZONES[j].label + '」时段，领导最活跃！'; break; } }
+    if (fishState.working) {
+      var ws = currentWorkSeconds();
+      workTime = fmtTime(ws); workRemindIn = fmtTime(3600 - (ws % 3600));
+      var wh = Math.floor(ws / 3600);
+      if (wh > fishState.workRemindedHours) { fishState.workRemindedHours = wh; saveFish(); alertRest(wh); }
+    }
+  }
+  if (phase === 'working' && lastLevel && lastLevel !== rk.level && rk.level !== 'safe') {
+    vibrate();
+  }
+  lastLevel = rk.level;
+
+  document.getElementById('displayTime').textContent = fmtTime(sec);
+  document.getElementById('lostMoney').textContent = fmt(lost);
+  document.getElementById('lostGoods').textContent = String(Math.max(0, Math.floor(lost / 18)));
+  document.getElementById('fishTitle').textContent = fishTitle;
+  document.getElementById('riskLabel').textContent = rk.label;
+  document.getElementById('riskDesc').textContent = rk.desc;
+  document.getElementById('quote').textContent = quote;
+  document.getElementById('hotZone').textContent = hotZone;
+  document.getElementById('riskPanel').className = 'risk-panel ' + rk.level;
+
+  var btnStart = document.getElementById('btnStart'), btnStop = document.getElementById('btnStop');
+  if (fishState.running) { btnStart.textContent = '偷懒中…'; btnStart.classList.add('disabled'); }
+  else if (phase === 'after') { btnStart.textContent = '已下班'; btnStart.classList.add('disabled'); }
+  else if (phase === 'before') { btnStart.textContent = '未上班'; btnStart.classList.add('disabled'); }
+  else { btnStart.textContent = '开始偷懒 🐟'; btnStart.classList.remove('disabled'); }
+
+  if (fishState.running) { btnStop.textContent = '不摸了，回去干活'; btnStop.classList.remove('disabled'); }
+  else { btnStop.textContent = fishState.working ? '干活中…' : '不摸了，回去干活'; btnStop.classList.add('disabled'); }
+
+  var wb = document.getElementById('workBar');
+  if (fishState.working && phase === 'working') { wb.classList.remove('hidden'); document.getElementById('workTime').textContent = workTime; document.getElementById('workRemindIn').textContent = workRemindIn; }
+  else { wb.classList.add('hidden'); }
+}
+function vibrate() { if (navigator.vibrate) navigator.vibrate(30); }
+function alertRest(h) { alert('⏰ 该摸鱼了\n' + restTip(h)); }
+function startFish() {
+  if (currentPhase() !== 'working') { alert(currentPhase() === 'after' ? '下班了，明天再摸' : '还没到上班时间'); return; }
+  if (fishState.running) return;
+  if (fishState.working) { fishState.workTotalSeconds += elapsedWork(); fishState.working = false; fishState.workStartTime = 0; }
+  fishState.running = true; fishState.startTime = Date.now(); saveFish(); renderFish();
+}
+function stopFish() {
+  if (!fishState.running) return;
+  fishState.totalSeconds += elapsedFish(); fishState.running = false; fishState.startTime = 0;
+  fishState.working = true; fishState.workStartTime = Date.now(); saveFish(); renderFish();
+}
+function addMinutes(min) {
+  if (currentPhase() !== 'working') { alert(currentPhase() === 'after' ? '下班了，不用再补记啦' : '还没上班，不能补记'); return; }
+  fishState.totalSeconds += min * 60; saveFish(); renderFish();
+}
+function resetFish() {
+  if (confirm('清空今日摸鱼记录？')) { fishState = freshFish(); saveFish(); renderFish(); }
+}
+
+// ===== 税后 =====
+var PENSION = 0.08, MEDICAL = 0.02, UNEMPLOY = 0.005;
+function netFromGross(gross, hp) {
+  var hr = hp / 100;
+  var pension = gross * PENSION, medical = gross * MEDICAL, unemploy = gross * UNEMPLOY, housing = gross * hr;
+  var it = pension + medical + unemploy + housing;
+  var tx = gross - it - 5000, t = 0;
+  if (tx > 0) {
+    if (tx <= 3000) t = tx * 0.03; else if (tx <= 12000) t = tx * 0.10 - 210; else if (tx <= 25000) t = tx * 0.20 - 1410;
+    else if (tx <= 35000) t = tx * 0.25 - 2660; else if (tx <= 55000) t = tx * 0.30 - 4410; else if (tx <= 80000) t = tx * 0.35 - 7160; else t = tx * 0.45 - 15160;
+  }
+  return { pension: pension, medical: medical, unemploy: unemploy, housing: housing, insuranceTotal: it, taxable: tx, tax: t, net: gross - it - t };
+}
+function grossFromNet(net, hp) {
+  if (!net || net <= 0) return 0;
+  var lo = net, hi = net * 2;
+  while (netFromGross(hi, hp).net < net) hi *= 2;
+  for (var i = 0; i < 60; i++) { var mid = (lo + hi) / 2; if (netFromGross(mid, hp).net < net) lo = mid; else hi = mid; }
+  return Math.round((lo + hi) / 2);
+}
+function calcTax() {
+  var pretax = Number(document.getElementById('pretax').value) || 0;
+  var hp = Number(document.getElementById('housingRatio').value) || 0;
+  var r = netFromGross(pretax, hp);
+  document.getElementById('txPension').textContent = fmt(r.pension);
+  document.getElementById('txMedical').textContent = fmt(r.medical);
+  document.getElementById('txUnemploy').textContent = fmt(r.unemploy);
+  document.getElementById('txHousing').textContent = fmt(r.housing);
+  document.getElementById('txInsurance').textContent = fmt(r.insuranceTotal);
+  document.getElementById('txTaxable').textContent = fmt(r.taxable);
+  document.getElementById('txTax').textContent = fmt(r.tax);
+  document.getElementById('txNet').textContent = fmt(r.net);
+}
+
+// ===== 加班 =====
+function calcOvertime() {
+  var r = calc(getConfig());
+  var hours = Number(document.getElementById('otHours').value) || 0;
+  var rate = 1.5;
+  var radios = document.getElementsByName('otRate');
+  for (var i = 0; i < radios.length; i++) if (radios[i].checked) rate = Number(radios[i].value);
+  document.getElementById('otMoney').textContent = fmt(r.hourly * hours * rate);
+  document.getElementById('otEquiv').textContent = (hours * rate).toFixed(1);
+  document.getElementById('otHourly').textContent = fmt(r.hourly);
+}
+
+// ===== 节日 =====
+var HOLIDAYS = [
+  { name: '元旦', date: '2027-01-01' }, { name: '春节', date: '2027-02-06' }, { name: '清明', date: '2027-04-05' },
+  { name: '劳动节', date: '2027-05-01' }, { name: '端午', date: '2027-06-09' }, { name: '中秋', date: '2027-09-15' },
+  { name: '国庆', date: '2027-10-01' }, { name: '元旦', date: '2028-01-01' }
+];
+function calcHoliday() {
+  var now = new Date();
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var name = '暂无', days = 0;
+  for (var i = 0; i < HOLIDAYS.length; i++) {
+    var d = new Date(HOLIDAYS[i].date.replace(/-/g, '/'));
+    if (d >= today) { name = HOLIDAYS[i].name; days = Math.ceil((d - today) / 86400000); break; }
+  }
+  var day = now.getDay();
+  var wd = (6 - day + 7) % 7; if (wd === 0) wd = 7;
+  document.getElementById('holidayName').textContent = name;
+  document.getElementById('holidayDays').textContent = days;
+  document.getElementById('weekendDays').textContent = wd;
+}
+
+// ===== 秒薪渲染 =====
+var tipTick = 0;
+function renderSec() {
+  var cfg = getConfig();
+  var r = calc(cfg);
+  var s = todayStatus(cfg);
+  tipTick++;
+  document.getElementById('perSecStr').textContent = r.perSec.toFixed(4);
+  document.getElementById('perMin').textContent = fmt(r.perMin);
+  document.getElementById('hourly').textContent = fmt(r.hourly);
+  document.getElementById('daily').textContent = fmt(r.daily);
+  document.getElementById('monthly').textContent = r.monthly.toFixed(0);
+  document.getElementById('earnedStr').textContent = fmt(s.earned);
+  document.getElementById('dailyStr').textContent = fmt(r.daily);
+  document.getElementById('remainMoney').textContent = fmt(s.remainMoney);
+  document.getElementById('progressFill').style.width = s.progress + '%';
+  var before = !s.working && !s.over;
+  document.getElementById('cdLabel').textContent = before ? '⏰ 距上班还有' : '⏰ 距下班还有';
+  document.getElementById('remainStr').textContent = before ? fmtRemain((Number(cfg.startHour || 9)) - nowHours()) : fmtRemain(s.remainHours);
+  document.getElementById('statusText').textContent = (s.over ? '已下班，今天辛苦了 🎉' : s.working ? '正在赚钱中 💰' : '还没到上班时间') + ' · 今日进度 ' + s.progress + '%';
+  document.getElementById('slogan').textContent = SLOGANS[Math.floor(tipTick / 8) % SLOGANS.length];
+}
+function copyShare() {
+  var r = calc(getConfig());
+  var text = '我每秒赚 ¥' + r.perSec.toFixed(4) + '，你呢？秒薪小程序：算算你的一秒值多少钱';
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function(){ alert('文案已复制，去粘贴分享吧'); }, function(){ fallbackCopy(text); });
+  } else { fallbackCopy(text); }
+}
+function fallbackCopy(text) {
+  var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); alert('文案已复制，去粘贴分享吧'); } catch (e) { alert(text); }
+  document.body.removeChild(ta);
+}
+
+// ===== 设置 =====
+function fillSettingForm() {
+  var cfg = getConfig();
+  var type = cfg.type || 'month';
+  var radios = document.getElementsByName('type');
+  for (var i = 0; i < radios.length; i++) radios[i].checked = (radios[i].value === type);
+  document.getElementById('salaryLabel').textContent = type === 'year' ? '年薪（元）' : '月薪（元）';
+  document.getElementById('salary').value = cfg.salary;
+  document.getElementById('workDays').value = cfg.workDays;
+  document.getElementById('workHours').value = cfg.workHours;
+  document.getElementById('startHour').value = cfg.startHour;
+  document.getElementById('endHour').value = cfg.endHour || '';
+}
+function onTypeChange(v) {
+  document.getElementById('salaryLabel').textContent = v === 'year' ? '年薪（元）' : '月薪（元）';
+}
+function saveConfig() {
+  var cfg = {
+    salary: Number(document.getElementById('salary').value) || 0,
+    type: (document.querySelector('input[name="type"]:checked') || {}).value || 'month',
+    workDays: Number(document.getElementById('workDays').value) || 0,
+    workHours: Number(document.getElementById('workHours').value) || 0,
+    startHour: Number(document.getElementById('startHour').value) || 0,
+    endHour: Number(document.getElementById('endHour').value) || 0
+  };
+  localStorage.setItem('ms_config', JSON.stringify(cfg));
+  refreshAll();
+  alert('已保存');
+}
+
+// ===== tab 切换 =====
+function switchTab(name) {
+  document.getElementById('tab-sec').classList.toggle('hidden', name !== 'sec');
+  document.getElementById('tab-fish').classList.toggle('hidden', name !== 'fish');
+  document.getElementById('tab-calc').classList.toggle('hidden', name !== 'calc');
+  document.getElementById('tab-setting').classList.toggle('hidden', name !== 'setting');
+  var tabs = document.querySelectorAll('.tab');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.toggle('active', tabs[i].getAttribute('data-tab') === name);
+}
+
+// ===== 初始化 =====
+function refreshAll() {
+  renderSec();
+  renderFish();
+  calcTax();
+  calcOvertime();
+  calcHoliday();
+  fillSettingForm();
+  // 税前月薪默认反推
+  var cfg = getConfig();
+  var r = calc(cfg);
+  var savedPretax = localStorage.getItem('ms_pretax');
+  var pretax = savedPretax ? Number(savedPretax) : grossFromNet(r.monthly, 12);
+  document.getElementById('pretax').value = pretax;
+  document.getElementById('settingNet').textContent = r.monthly.toFixed(0);
+  calcTax();
+}
+
+loadFish();
+refreshAll();
+setInterval(function(){ renderSec(); renderFish(); }, 1000);
+</script>
+</body>
+</html>

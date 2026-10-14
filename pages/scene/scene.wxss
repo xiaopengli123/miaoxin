@@ -1,0 +1,165 @@
+.scene-hero {
+  padding: 40rpx 40rpx 24rpx;
+  text-align: center;
+}
+.scene-hero-label {
+  color: #8A8A8F;
+  font-size: 26rpx;
+}
+.scene-hero-num {
+  color: #FFD666;
+  font-size: 64rpx;
+  font-weight: 800;
+  margin-top: 8rpx;
+  text-shadow: 0 0 30rpx rgba(255, 214, 102, 0.6);
+}
+.scene-slogan {
+  text-align: center;
+  color: #C0A050;
+  font-size: 24rpx;
+  font-style: italic;
+  padding: 0 40rpx 8rpx;
+}
+
+.section-title {
+  margin: 32rpx 32rpx 20rpx;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #F5F5F7;
+}
+
+.goods-list {
+  padding: 0 24rpx;
+}
+.goods-card {
+  background: #1A1A1F;
+  border-radius: 20rpx;
+  padding: 26rpx 20rpx 26rpx 28rpx;
+  margin-bottom: 16rpx;
+  display: flex;
+  align-items: center;
+}
+.goods-icon {
+  font-size: 44rpx;
+  margin-right: 22rpx;
+}
+.goods-info {
+  flex: 1;
+}
+.goods-name {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #F5F5F7;
+}
+.goods-price {
+  font-size: 22rpx;
+  color: #8A8A8F;
+  margin-top: 4rpx;
+}
+.goods-work {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: #FFD666;
+  margin-right: 16rpx;
+}
+.goods-del {
+  width: 48rpx;
+  height: 48rpx;
+  line-height: 48rpx;
+  text-align: center;
+  color: #5A5A5F;
+  font-size: 26rpx;
+}
+
+.add-btn {
+  margin: 8rpx 24rpx 0;
+  text-align: center;
+  color: #FFD666;
+  font-size: 26rpx;
+  padding: 20rpx 0;
+  border: 2rpx dashed #4A3E16;
+  border-radius: 16rpx;
+}
+.add-form {
+  margin: 16rpx 24rpx 0;
+  background: #1A1A1F;
+  border-radius: 20rpx;
+  padding: 24rpx;
+}
+.add-input {
+  background: #0F0F12;
+  border-radius: 12rpx;
+  padding: 20rpx 24rpx;
+  font-size: 28rpx;
+  color: #F5F5F7;
+  margin-bottom: 16rpx;
+}
+.add-submit {
+  background: #FFD666;
+  color: #1A1A1F;
+  border-radius: 40rpx;
+  text-align: center;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.scene-list {
+  padding: 0 24rpx 8rpx;
+}
+.scene-card {
+  background: #1A1A1F;
+  border-radius: 20rpx;
+  padding: 28rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+}
+.scene-icon {
+  font-size: 48rpx;
+  margin-right: 24rpx;
+}
+.scene-info {
+  flex: 1;
+}
+.scene-name {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #F5F5F7;
+}
+.scene-tip {
+  font-size: 22rpx;
+  color: #8A8A8F;
+  margin-top: 4rpx;
+}
+.scene-min {
+  font-size: 22rpx;
+  color: #5A5A5F;
+  margin-top: 4rpx;
+}
+.scene-amount {
+  font-size: 36rpx;
+  font-weight: 800;
+  color: #FFD666;
+}
+
+.life-card {
+  margin: 0 24rpx 40rpx;
+  background: linear-gradient(135deg, #2A1F00 0%, #1A1400 100%);
+  border: 2rpx solid #FFD666;
+  border-radius: 24rpx;
+  padding: 40rpx 32rpx;
+  text-align: center;
+}
+.life-label {
+  color: #E0C060;
+  font-size: 26rpx;
+  line-height: 1.6;
+}
+.life-num {
+  color: #FFE9A8;
+  font-size: 52rpx;
+  font-weight: 800;
+  margin-top: 16rpx;
+  text-shadow: 0 0 30rpx rgba(255, 214, 102, 0.6);
+}

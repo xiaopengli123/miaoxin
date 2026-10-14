@@ -1,0 +1,59 @@
+<view class="section-title">🎉 盼头倒计时</view>
+<view class="holiday-card">
+  <view class="holiday-item">
+    <view class="holiday-label">距下一个节日「{{holidayName}}」</view>
+    <view class="holiday-num">{{holidayDays}} <text class="holiday-unit">天</text></view>
+  </view>
+  <view class="holiday-divider"></view>
+  <view class="holiday-item">
+    <view class="holiday-label">距下个周末</view>
+    <view class="holiday-num">{{weekendDays}} <text class="holiday-unit">天</text></view>
+  </view>
+</view>
+
+<view class="section-title">💪 加班费计算器</view>
+<view class="calc-card">
+  <view class="calc-head">你的时薪 <text class="hl">¥{{hourly}}</text> / 小时</view>
+
+  <view class="field-label">加班时长（小时）</view>
+  <input class="field-input" type="digit" value="{{overtimeHours}}" bindinput="onHoursInput" />
+
+  <view class="field-label">加班类型</view>
+  <radio-group class="rate-group" bindchange="onRateChange">
+    <label class="radio" wx:for="{{overtimeRates}}" wx:key="id">
+      <radio value="{{item.rate}}" checked="{{overtimeRate === item.rate}}" />{{item.name}} {{item.tip}}
+    </label>
+  </radio-group>
+
+  <view class="result">
+    <view class="result-label">加班费</view>
+    <view class="result-num">¥{{overtimeMoney}}</view>
+    <view class="result-tip">相当于平时白干 {{overtimeEquiv}} 的收入</view>
+  </view>
+</view>
+
+<view class="section-title">💰 税后工资计算器</view>
+<view class="calc-card">
+  <view class="field-label">税前月薪（元）</view>
+  <input class="field-input" type="number" value="{{pretax}}" bindinput="onPretaxInput" />
+  <view class="result-tip">已按设置的到手月薪 ¥{{settingNet}} 反推税前，可手动改</view>
+
+  <view class="field-label">公积金比例（%，默认 12）</view>
+  <input class="field-input" type="number" value="{{housingRatio}}" bindinput="onHousingInput" />
+
+  <view class="tax-rows">
+    <view class="tax-row"><text>养老保险（8%）</text><text>-¥{{pension}}</text></view>
+    <view class="tax-row"><text>医疗保险（2%）</text><text>-¥{{medical}}</text></view>
+    <view class="tax-row"><text>失业保险（0.5%）</text><text>-¥{{unemploy}}</text></view>
+    <view class="tax-row"><text>住房公积金</text><text>-¥{{housing}}</text></view>
+    <view class="tax-row strong"><text>五险一金合计</text><text>-¥{{insuranceTotal}}</text></view>
+    <view class="tax-row"><text>应纳税所得额</text><text>¥{{taxable}}</text></view>
+    <view class="tax-row"><text>个人所得税</text><text>-¥{{tax}}</text></view>
+  </view>
+
+  <view class="result">
+    <view class="result-label">每月到手</view>
+    <view class="result-num">¥{{net}}</view>
+  </view>
+  <view class="result-tip">估算值，实际以当地社保/公积金政策为准</view>
+</view>

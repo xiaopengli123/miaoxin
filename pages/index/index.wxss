@@ -1,0 +1,220 @@
+page {
+  background: #0A0A0E;
+}
+
+.add-tip {
+  margin: 20rpx 24rpx 0;
+  background: #2A1F00;
+  border: 2rpx solid #FFD666;
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+  display: flex;
+  align-items: center;
+}
+.add-tip-text {
+  flex: 1;
+  color: #FFE9A8;
+  font-size: 24rpx;
+  line-height: 1.5;
+}
+.add-tip-close {
+  margin-left: 20rpx;
+  color: #FFD666;
+  font-size: 24rpx;
+  padding: 8rpx 20rpx;
+  border: 2rpx solid #FFD666;
+  border-radius: 30rpx;
+  flex-shrink: 0;
+}
+
+.plow-scene {
+  position: relative;
+  height: 200rpx;
+  overflow: hidden;
+  background: linear-gradient(135deg, #160E04 0%, #241505 100%);
+  border-bottom: 4rpx solid #3A2A12;
+}
+.plow-animal {
+  position: absolute;
+  top: 36rpx;
+  font-size: 88rpx;
+  animation: plow 6s ease-in-out infinite;
+}
+.plow-caption {
+  position: absolute;
+  bottom: 40rpx;
+  width: 100%;
+  text-align: center;
+  color: #E0C060;
+  font-size: 26rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+}
+.plow-sub {
+  position: absolute;
+  bottom: 12rpx;
+  width: 100%;
+  text-align: center;
+  color: #C0A050;
+  font-size: 24rpx;
+}
+@keyframes plow {
+  0% {
+    transform: translateX(20rpx) rotate(-8deg);
+  }
+  25% {
+    transform: translateX(200rpx) rotate(0deg);
+  }
+  50% {
+    transform: translateX(460rpx) rotate(8deg);
+  }
+  75% {
+    transform: translateX(200rpx) rotate(0deg);
+  }
+  100% {
+    transform: translateX(20rpx) rotate(-8deg);
+  }
+}
+
+.countdown {
+  margin: 24rpx;
+  background: linear-gradient(135deg, #2A1F00 0%, #1A1400 100%);
+  border: 2rpx solid #FFD666;
+  border-radius: 24rpx;
+  padding: 36rpx 32rpx;
+  text-align: center;
+  box-shadow: 0 0 40rpx rgba(255, 214, 102, 0.15);
+}
+.cd-label {
+  color: #FFD666;
+  font-size: 26rpx;
+  letter-spacing: 4rpx;
+}
+.cd-time {
+  font-size: 64rpx;
+  font-weight: 800;
+  color: #FFE9A8;
+  margin-top: 8rpx;
+  text-shadow: 0 0 30rpx rgba(255, 214, 102, 0.8);
+  font-variant-numeric: tabular-nums;
+}
+.cd-money {
+  color: #E0C060;
+  font-size: 26rpx;
+  margin-top: 12rpx;
+}
+
+.hero {
+  padding: 40rpx 40rpx 20rpx;
+  text-align: center;
+}
+.hero-sec {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+.hero-num {
+  font-size: 100rpx;
+  font-weight: 900;
+  color: #FFD666;
+  text-shadow: 0 0 40rpx rgba(255, 214, 102, 0.9), 0 0 80rpx rgba(255, 214, 102, 0.5);
+  font-variant-numeric: tabular-nums;
+  animation: pulse 2s ease-in-out infinite;
+}
+.hero-unit {
+  font-size: 34rpx;
+  color: #B0A060;
+  margin-left: 12rpx;
+}
+.hero-sub {
+  color: #8A8A8F;
+  font-size: 26rpx;
+  margin-top: 20rpx;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+.progress-card {
+  margin: 24rpx;
+  background: #1A1A1F;
+  border-radius: 20rpx;
+  padding: 32rpx;
+}
+.progress-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.progress-label {
+  font-size: 28rpx;
+  color: #F5F5F7;
+  font-weight: 700;
+}
+.progress-value {
+  font-size: 28rpx;
+  color: #FFD666;
+  font-weight: 700;
+}
+.progress-bar {
+  height: 20rpx;
+  background: #2A2A30;
+  border-radius: 10rpx;
+  margin-top: 20rpx;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FFD666, #FFB800);
+  border-radius: 10rpx;
+  transition: width 0.5s;
+  box-shadow: 0 0 20rpx rgba(255, 214, 102, 0.6);
+}
+.progress-tip {
+  color: #8A8A8F;
+  font-size: 22rpx;
+  margin-top: 12rpx;
+  text-align: center;
+}
+
+.convert-grid {
+  margin: 8rpx 24rpx 40rpx;
+  display: flex;
+  flex-wrap: wrap;
+  background: #1A1A1F;
+  border-radius: 20rpx;
+  padding: 20rpx 0;
+}
+.convert-item {
+  width: 25%;
+  text-align: center;
+  padding: 16rpx 0;
+}
+.c-num {
+  font-size: 36rpx;
+  font-weight: 800;
+  color: #FFE9A8;
+}
+.c-label {
+  font-size: 22rpx;
+  color: #8A8A8F;
+  margin-top: 6rpx;
+}
+
+.poster-btn {
+  margin: 0 24rpx 24rpx;
+  background: linear-gradient(135deg, #3A2A12 0%, #2A1F00 100%);
+  border: 2rpx dashed #FFD666;
+  color: #FFD666;
+  border-radius: 16rpx;
+  text-align: center;
+  padding: 24rpx 0;
+  font-size: 28rpx;
+  font-weight: 700;
+}

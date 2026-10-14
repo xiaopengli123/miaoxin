@@ -1,0 +1,54 @@
+<view class="form">
+  <view class="field">
+    <view class="field-label">收入周期</view>
+    <radio-group class="field-control" bindchange="onTypeChange">
+      <label class="radio"><radio value="month" checked="{{type === 'month'}}" />月薪</label>
+      <label class="radio"><radio value="year" checked="{{type === 'year'}}" />年薪</label>
+    </radio-group>
+  </view>
+
+  <view class="field">
+    <view class="field-label">{{type === 'year' ? '年薪' : '月薪'}}（元）</view>
+    <input class="field-input" type="number" value="{{salary}}" bindinput="onSalaryInput" placeholder="如 8000" />
+  </view>
+
+  <view class="field">
+    <view class="field-label">每月工作天数</view>
+    <input class="field-input" type="number" value="{{workDays}}" bindinput="onDaysInput" placeholder="如 22" />
+  </view>
+
+  <view class="field">
+    <view class="field-label">每天工作小时</view>
+    <input class="field-input" type="number" value="{{workHours}}" bindinput="onHoursInput" placeholder="如 8" />
+  </view>
+
+  <view class="field">
+    <view class="field-label">几点上班（小时，如 9 或 9.5）</view>
+    <input class="field-input" type="number" value="{{startHour}}" bindinput="onStartInput" placeholder="如 9" />
+  </view>
+
+  <view class="field">
+    <view class="field-label">几点下班（小时，如 18 或 17.5）</view>
+    <input class="field-input" type="number" value="{{endHour}}" bindinput="onEndInput" placeholder="默认 = 上班 + 工作时长" />
+  </view>
+
+  <view class="save-btn" bindtap="save">保存并计算</view>
+
+  <view class="form-tip">这里填"税后到手"月薪，首页的"每秒赚X"最真实。保存后各页立即更新。</view>
+</view>
+
+<view class="section-title">⭐ 评价与建议</view>
+
+<view class="rate-card">
+  <view class="rate-stars">
+    <text wx:for="{{[1,2,3,4,5]}}" wx:key="*this" class="star {{rating >= item ? 'on' : ''}}" bindtap="rate" data-star="{{item}}">{{rating >= item ? '★' : '☆'}}</text>
+  </view>
+  <view class="rate-text">{{ratingText}}</view>
+</view>
+
+<view class="feedback-card">
+  <view class="feedback-label">想吐槽或提建议？写下来，一键复制发给开发者：</view>
+  <textarea class="feedback-input" value="{{feedback}}" bindinput="onFeedbackInput" placeholder="比如：希望增加夜班倒计时…" maxlength="200"></textarea>
+  <view class="feedback-btn" bindtap="copyFeedback">复制建议内容</view>
+  <view class="feedback-hint">复制后，可粘贴到微信发给开发者；也可以点右上角「···」→「反馈与投诉」走微信官方渠道。</view>
+</view>

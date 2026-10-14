@@ -1,0 +1,129 @@
+.section-title {
+  margin: 32rpx 32rpx 20rpx;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #F5F5F7;
+}
+
+.holiday-card {
+  margin: 0 24rpx;
+  background: linear-gradient(135deg, #2A1F00 0%, #1A1400 100%);
+  border: 2rpx solid #FFD666;
+  border-radius: 20rpx;
+  padding: 32rpx 28rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 0 40rpx rgba(255, 214, 102, 0.15);
+}
+.holiday-item {
+  flex: 1;
+  text-align: center;
+}
+.holiday-divider {
+  width: 2rpx;
+  height: 70rpx;
+  background: #4A3E16;
+}
+.holiday-label {
+  color: #E0C060;
+  font-size: 24rpx;
+}
+.holiday-num {
+  color: #FFE9A8;
+  font-size: 60rpx;
+  font-weight: 800;
+  margin-top: 8rpx;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 30rpx rgba(255, 214, 102, 0.6);
+}
+.holiday-unit {
+  font-size: 28rpx;
+  font-weight: 400;
+}
+
+.calc-card {
+  margin: 0 24rpx;
+  background: #1A1A1F;
+  border-radius: 20rpx;
+  padding: 28rpx;
+}
+.calc-head {
+  color: #8A8A8F;
+  font-size: 26rpx;
+  margin-bottom: 20rpx;
+}
+.hl {
+  color: #FFD666;
+  font-weight: 700;
+  font-size: 30rpx;
+}
+
+.field-label {
+  font-size: 26rpx;
+  color: #8A8A8F;
+  margin: 16rpx 0 12rpx;
+}
+.field-input {
+  background: #0F0F12;
+  border-radius: 12rpx;
+  padding: 20rpx 24rpx;
+  font-size: 32rpx;
+  color: #F5F5F7;
+  font-weight: 600;
+}
+
+.rate-group {
+  display: flex;
+  flex-direction: column;
+}
+.radio {
+  margin-bottom: 16rpx;
+  font-size: 28rpx;
+  color: #F5F5F7;
+}
+
+.result {
+  margin-top: 24rpx;
+  padding-top: 24rpx;
+  border-top: 2rpx solid #2A2A30;
+  text-align: center;
+}
+.result-label {
+  color: #8A8A8F;
+  font-size: 24rpx;
+}
+.result-num {
+  color: #FFD666;
+  font-size: 64rpx;
+  font-weight: 800;
+  margin-top: 8rpx;
+  text-shadow: 0 0 30rpx rgba(255, 214, 102, 0.6);
+}
+.result-tip {
+  color: #5A5A5F;
+  font-size: 22rpx;
+  margin-top: 12rpx;
+}
+
+.tax-rows {
+  margin-top: 20rpx;
+}
+.tax-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #2A2A30;
+  font-size: 26rpx;
+  color: #C0C0C5;
+}
+.tax-row:last-child {
+  border-bottom: none;
+}
+.tax-row.strong {
+  color: #FFD666;
+  font-weight: 700;
+}
+
+.calc-card:last-of-type {
+  margin-bottom: 40rpx;
+}

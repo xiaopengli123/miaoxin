@@ -1,0 +1,46 @@
+<view class="add-tip" wx:if="{{showAddTip}}">
+  <view class="add-tip-text">💡 点右上角「···」→「添加到桌面」，下次一打开就能看工作提醒</view>
+  <view class="add-tip-close" bindtap="dismissAddTip">知道了</view>
+</view>
+
+<view class="plow-scene">
+  <view class="plow-animal">🐂</view>
+  <view class="plow-caption">牛马的一天，还在耕地</view>
+  <view class="plow-sub">{{slogan}}</view>
+</view>
+
+<view class="countdown">
+  <view class="cd-label">⏰ {{countdownLabel}}</view>
+  <view class="cd-time">{{remainStr}}</view>
+  <view class="cd-money">今天还能赚 ¥{{remainMoney}}</view>
+</view>
+
+<view class="hero">
+  <view class="hero-sec">
+    <text class="hero-num">¥{{perSecStr}}</text>
+    <text class="hero-unit">/ 秒</text>
+  </view>
+  <view class="hero-sub">你的每一秒，都在为你赚钱 💸</view>
+</view>
+
+<view class="progress-card">
+  <view class="progress-head">
+    <text class="progress-label">今日已赚</text>
+    <text class="progress-value">¥{{earnedStr}} / ¥{{dailyStr}}</text>
+  </view>
+  <view class="progress-bar">
+    <view class="progress-fill" style="width: {{progress}}%;"></view>
+  </view>
+  <view class="progress-tip">{{statusText}} · 今日进度 {{progress}}%</view>
+</view>
+
+<view class="convert-grid">
+  <view class="convert-item"><view class="c-num">¥{{perMin}}</view><view class="c-label">1 分钟</view></view>
+  <view class="convert-item"><view class="c-num">¥{{hourly}}</view><view class="c-label">1 小时</view></view>
+  <view class="convert-item"><view class="c-num">¥{{daily}}</view><view class="c-label">1 天</view></view>
+  <view class="convert-item"><view class="c-num">¥{{monthly}}</view><view class="c-label">1 个月</view></view>
+</view>
+
+<view class="poster-btn" bindtap="goPoster">📸 生成我的秒薪海报，发给朋友</view>
+
+<ad wx:if="{{bannerAdId}}" unit-id="{{bannerAdId}}" style="margin: 24rpx;"></ad>

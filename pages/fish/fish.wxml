@@ -1,0 +1,79 @@
+<view class="risk-panel {{riskLevel}}">
+  <view class="risk-radar">📡 领导雷达</view>
+  <view class="fish-title">{{fishTitle}}</view>
+  <view class="fish-time">{{displayTime}}</view>
+  <view class="fish-lost">已损失 ¥{{lostMoney}} ≈ {{lostGoods}} 杯奶茶</view>
+
+  <view class="risk-bar-wrap">
+    <view class="risk-bar">
+      <view class="risk-fill" style="width: {{riskPercent}}%;"></view>
+    </view>
+    <view class="risk-percent">被抓风险 {{riskPercent}}%</view>
+  </view>
+
+  <view class="risk-status">
+    <view class="risk-label">{{riskLabel}}</view>
+    <view class="risk-desc">{{riskDesc}}</view>
+  </view>
+
+  <view class="risk-quote">“{{quote}}”</view>
+  <view class="risk-hotzone" wx:if="{{hotZone}}">{{hotZone}}</view>
+</view>
+
+<view class="fish-actions">
+  <view class="fish-btn start {{(running || workStatus !== 'working') ? 'disabled' : ''}}" bindtap="startFish">{{running ? '偷懒中…' : (workStatus === 'after' ? '已下班' : (workStatus === 'before' ? '未上班' : '开始偷懒 🐟'))}}</view>
+  <view class="fish-btn stop {{running ? '' : 'disabled'}}" bindtap="stopFish">{{running ? '不摸了，回去干活' : (working ? '干活中…' : '不摸了，回去干活')}}</view>
+</view>
+
+<view class="work-bar" wx:if="{{working}}">
+  <view class="work-item">
+    <view class="work-label">💼 已连续工作</view>
+    <view class="work-time">{{workTime}}</view>
+  </view>
+  <view class="work-divider"></view>
+  <view class="work-item">
+    <view class="work-label">距下次摸鱼提醒</view>
+    <view class="work-remind">{{workRemindIn}}</view>
+  </view>
+</view>
+
+<view class="fish-quick">
+  <view class="quick-label">手动补记（忘记计时时用）：</view>
+  <view class="quick-btns">
+    <view class="quick-btn" bindtap="addMinutes" data-min="10">+10 分</view>
+    <view class="quick-btn" bindtap="addMinutes" data-min="30">+30 分</view>
+    <view class="quick-btn" bindtap="addMinutes" data-min="60">+1 小时</view>
+  </view>
+</view>
+
+<view class="card">
+  <view class="card-title">⏰ 领导出没高危时段</view>
+  <view class="zone-item"><text class="zone-time">09:00–09:30</text><text class="zone-desc">晨会·领导巡视</text></view>
+  <view class="zone-item"><text class="zone-time">11:00–11:30</text><text class="zone-desc">饭前·领导溜达</text></view>
+  <view class="zone-item"><text class="zone-time">14:00–14:30</text><text class="zone-desc">午后·领导巡查</text></view>
+  <view class="zone-item"><text class="zone-time">16:30–17:30</text><text class="zone-desc">下班前·领导突击</text></view>
+  <view class="zone-note">这些时段摸鱼，被抓概率翻倍，手机收一收</view>
+</view>
+
+<view class="card">
+  <view class="card-title">🕵️ 摸鱼防抓六招</view>
+  <view class="tip-item">1. 耳朵当雷达：听脚步声辨人，领导步频沉稳、同事轻快</view>
+  <view class="tip-item">2. 瞬间 Alt+Tab：切回工作界面要练成肌肉记忆</view>
+  <view class="tip-item">3. 表情管理：别盯着屏幕傻笑，嘴角压一压</view>
+  <view class="tip-item">4. 装忙技巧：键盘敲响点，眉头皱起来，装作在思考</view>
+  <view class="tip-item">5. 挡箭牌：永远开着一个工作文档，随时能切回去</view>
+  <view class="tip-item">6. 屏幕调暗 + 防窥膜：手机亮度低，领导路过看不清</view>
+</view>
+
+<view class="card">
+  <view class="card-title">🔓 摸鱼进阶秘籍</view>
+  <block wx:if="{{unlocked}}">
+    <view class="tip-item">1. 双屏战术：外接一个显示器，一屏工作一屏摸鱼，领导看工作屏</view>
+    <view class="tip-item">2. 节奏控制：摸 20 分钟干 10 分钟，保持"在线"状态别长时间掉线</view>
+    <view class="tip-item">3. 反向汇报：主动找领导同步进度，让领导以为你忙得飞起</view>
+    <view class="tip-item">4. 窗口伪装：工作窗口铺满，摸鱼窗口小窗悬浮，随时能切</view>
+  </block>
+  <view class="unlock-btn" wx:else bindtap="unlockPro">看广告解锁进阶秘籍</view>
+</view>
+
+<view class="fish-reset" bindtap="reset">清空今日摸鱼记录</view>
